@@ -1,6 +1,4 @@
-﻿using Dalamud.Logging;
-using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Client.System.Memory;
+﻿using FFXIVClientStructs.FFXIV.Client.System.Memory;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 
 namespace NamePlateDebuffs.StatusNode
@@ -150,14 +148,14 @@ namespace NamePlateDebuffs.StatusNode
             var newResNode = (AtkResNode*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkResNode), 8);
             if (newResNode == null)
             {
-                PluginLog.Debug("Failed to allocate memory for res node");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for res node");
                 return null;
             }
             IMemorySpace.Memset(newResNode, 0, (ulong)sizeof(AtkResNode));
             newResNode->Ctor();
 
             newResNode->Type = NodeType.Res;
-            newResNode->Flags = (short)(NodeFlags.AnchorLeft | NodeFlags.AnchorTop);
+            newResNode->NodeFlags = (NodeFlags.AnchorLeft | NodeFlags.AnchorTop);
             newResNode->DrawFlags = 0;
 
             return newResNode;
@@ -168,14 +166,14 @@ namespace NamePlateDebuffs.StatusNode
             var newImageNode = (AtkImageNode*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkImageNode), 8);
             if (newImageNode == null)
             {
-                PluginLog.Debug("Failed to allocate memory for image node");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for image node");
                 return null;
             }
             IMemorySpace.Memset(newImageNode, 0, (ulong)sizeof(AtkImageNode));
             newImageNode->Ctor();
 
             newImageNode->AtkResNode.Type = NodeType.Image;
-            newImageNode->AtkResNode.Flags = (short)(NodeFlags.AnchorLeft | NodeFlags.AnchorTop | NodeFlags.UseDepthBasedPriority);
+            newImageNode->AtkResNode.NodeFlags = (NodeFlags.AnchorLeft | NodeFlags.AnchorTop | NodeFlags.UseDepthBasedPriority);
             newImageNode->AtkResNode.DrawFlags = 0;
 
             newImageNode->WrapMode = 1;
@@ -184,7 +182,7 @@ namespace NamePlateDebuffs.StatusNode
             var partsList = (AtkUldPartsList*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkUldPartsList), 8);
             if (partsList == null)
             {
-                PluginLog.Debug("Failed to allocate memory for parts list");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for parts list");
                 newImageNode->AtkResNode.Destroy(true);
                 return null;
             }
@@ -195,7 +193,7 @@ namespace NamePlateDebuffs.StatusNode
             var part = (AtkUldPart*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkUldPart), 8);
             if (part == null)
             {
-                PluginLog.Debug("Failed to allocate memory for part");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for part");
                 IMemorySpace.Free(partsList, (ulong)sizeof(AtkUldPartsList));
                 newImageNode->AtkResNode.Destroy(true);
             }
@@ -210,7 +208,7 @@ namespace NamePlateDebuffs.StatusNode
             var asset = (AtkUldAsset*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkUldAsset), 8);
             if (asset == null)
             {
-                PluginLog.Log("Failed to allocate memory for asset");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for asset");
                 IMemorySpace.Free(part, (ulong)sizeof(AtkUldPart));
                 IMemorySpace.Free(partsList, (ulong)sizeof(AtkUldPartsList));
                 newImageNode->AtkResNode.Destroy(true);
@@ -233,14 +231,14 @@ namespace NamePlateDebuffs.StatusNode
             var newTextNode = (AtkTextNode*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkTextNode), 8);
             if (newTextNode == null)
             {
-                PluginLog.Debug("Failed to allocate memory for text node");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for text node");
                 return null;
             }
             IMemorySpace.Memset(newTextNode, 0, (ulong)sizeof(AtkTextNode));
             newTextNode->Ctor();
 
             newTextNode->AtkResNode.Type = NodeType.Text;
-            newTextNode->AtkResNode.Flags = (short)(NodeFlags.AnchorLeft | NodeFlags.AnchorTop | NodeFlags.UseDepthBasedPriority);
+            newTextNode->AtkResNode.NodeFlags = (NodeFlags.AnchorLeft | NodeFlags.AnchorTop | NodeFlags.UseDepthBasedPriority);
             newTextNode->AtkResNode.DrawFlags = 12;
             newTextNode->AtkResNode.SetWidth(24);
             newTextNode->AtkResNode.SetHeight(17);
