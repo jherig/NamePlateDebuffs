@@ -1,5 +1,4 @@
-﻿using Dalamud.Game.ClientState.Keys;
-using Dalamud.Hooking;
+﻿using Dalamud.Hooking;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using FFXIVClientStructs.FFXIV.Client.System.Framework;

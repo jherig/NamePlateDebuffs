@@ -1,8 +1,7 @@
-﻿using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Client.System.Memory;
+﻿using FFXIVClientStructs.FFXIV.Client.System.Memory;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using System;
-using Dalamud.Logging;
+
 
 namespace NamePlateDebuffs.StatusNode
 {

@@ -1,7 +1,4 @@
-﻿using Dalamud.Hooking;
-using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Client.System.Memory;
-using FFXIVClientStructs.FFXIV.Client.UI;
+﻿using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using Lumina.Excel;
 using Lumina.Excel.GeneratedSheets;

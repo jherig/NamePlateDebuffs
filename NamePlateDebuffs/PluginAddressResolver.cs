@@ -1,7 +1,5 @@
 ﻿using Dalamud.Game;
 using System;
-using Dalamud.Logging;
-using NamePlateDebuffs;
 
 namespace NamePlateDebuffs
 {
