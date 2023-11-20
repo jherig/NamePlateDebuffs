@@ -17,14 +17,14 @@ namespace NamePlateDebuffs
         {
             _plugin = p;
 
-            _plugin.PluginInterface.UiBuilder.OpenConfigUi += UiBuilder_OnOpenConfigUi;
-            _plugin.PluginInterface.UiBuilder.Draw += UiBuilder_OnBuild;
+            _plugin.Interface.UiBuilder.OpenConfigUi += UiBuilder_OnOpenConfigUi;
+            _plugin.Interface.UiBuilder.Draw += UiBuilder_OnBuild;
         }
 
         public void Dispose()
         {
-            _plugin.PluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OnOpenConfigUi;
-            _plugin.PluginInterface.UiBuilder.Draw -= UiBuilder_OnBuild;
+            _plugin.Interface.UiBuilder.OpenConfigUi -= UiBuilder_OnOpenConfigUi;
+            _plugin.Interface.UiBuilder.Draw -= UiBuilder_OnBuild;
         }
 
         public void ToggleConfig()

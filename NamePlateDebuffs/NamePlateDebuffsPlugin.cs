@@ -12,9 +12,18 @@ namespace NamePlateDebuffs
     {
         public string Name => "NamePlateDebuffs";
 
-        [PluginService][RequiredVersion("1.0")] public DalamudPluginInterface PluginInterface { get; private set; } = null!;
-        [PluginService][RequiredVersion("1.0")] public IClientState ClientState { get; private set; } = null!;
-        [PluginService][RequiredVersion("1.0")] public static ICommandManager CommandManager { get; private set; } = null!;
+        [PluginService]
+        [RequiredVersion("1.0")]
+        public DalamudPluginInterface Interface { get; private set; } = null!;
+
+        [PluginService]
+        [RequiredVersion("1.0")]
+        public IClientState ClientState { get; private set; } = null!;
+
+        [PluginService]
+        [RequiredVersion("1.0")]
+        public static ICommandManager CommandManager { get; private set; } = null!;
+
         [PluginService] public static IDataManager DataManager { get; private set; } = null!;
         [PluginService] public static IFramework Framework { get; private set; } = null!;
         [PluginService] public static IPluginLog Log { get; private set; } = null!;
@@ -30,12 +39,9 @@ namespace NamePlateDebuffs
 
         public NamePlateDebuffsPlugin()
         {
-            // load ECommons
-            //ECommonsMain.Init(PluginInterface, this, Module.DalamudReflector);
-
             // load or create config
-            Config = PluginInterface.GetPluginConfig() as NamePlateDebuffsPluginConfig ?? new NamePlateDebuffsPluginConfig();
-            Config.Initialize(PluginInterface);
+            Config = Interface.GetPluginConfig() as NamePlateDebuffsPluginConfig ?? new NamePlateDebuffsPluginConfig();
+            Config.Initialize(Interface);
 
 
             Address = new PluginAddressResolver();

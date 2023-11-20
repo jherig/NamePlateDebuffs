@@ -66,8 +66,7 @@ namespace NamePlateDebuffs
             DurationEdgeColor.W = 1;
         }
 
-        [NonSerialized] 
-        private DalamudPluginInterface? _pluginInterface;
+        [NonSerialized] private DalamudPluginInterface? _pluginInterface;
 
         public void Initialize(DalamudPluginInterface pluginInterface)
         {
