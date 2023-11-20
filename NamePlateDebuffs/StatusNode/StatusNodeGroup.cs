@@ -93,17 +93,17 @@ namespace NamePlateDebuffs.StatusNode
 
         public void LoadConfig()
         {
-            RootNode->SetPositionShort((short)_plugin.Configuration.GroupX, (short)_plugin.Configuration.GroupY);
-            RootNode->SetScale(_plugin.Configuration.Scale, _plugin.Configuration.Scale);
+            RootNode->SetPositionShort((short)_plugin.Config.GroupX, (short)_plugin.Config.GroupY);
+            RootNode->SetScale(_plugin.Config.Scale, _plugin.Config.Scale);
             
-            RootNode->SetWidth((ushort) (StatusNodes[0].RootNode->Width * NodePerGroupCount + _plugin.Configuration.NodeSpacing * (NodePerGroupCount - 1)));
+            RootNode->SetWidth((ushort) (StatusNodes[0].RootNode->Width * NodePerGroupCount + _plugin.Config.NodeSpacing * (NodePerGroupCount - 1)));
             RootNode->SetHeight(StatusNodes[0].RootNode->Height);
 
             for (int i = 0; i < NodePerGroupCount; i++)
             {
                 if (StatusNodes[i] != null)
                 {
-                    StatusNodes[i].RootNode->SetPositionShort((short)((_plugin.Configuration.FillFromRight ? 3 - i : i) * (StatusNodes[0].RootNode->Width + _plugin.Configuration.NodeSpacing)), 0);
+                    StatusNodes[i].RootNode->SetPositionShort((short)((_plugin.Config.FillFromRight ? 3 - i : i) * (StatusNodes[0].RootNode->Width + _plugin.Config.NodeSpacing)), 0);
                 }
             }
         }

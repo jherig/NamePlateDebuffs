@@ -24,7 +24,7 @@ namespace NamePlateDebuffs
         public StatusNodeManager StatusNodeManager { get; private set; } = null!;
         public static AddonNamePlateHooks Hooks { get; private set; } = null!;
         public NamePlateDebuffsPluginUI UI { get; private set; } = null!;
-        public Configuration Configuration { get;}
+        public NamePlateDebuffsPluginConfig Config { get; private set; } = null!;
 
         internal bool InPvp;
 
@@ -34,8 +34,8 @@ namespace NamePlateDebuffs
             //ECommonsMain.Init(PluginInterface, this, Module.DalamudReflector);
 
             // load or create config
-            Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
-            Configuration.Initialize(PluginInterface);
+            Config = PluginInterface.GetPluginConfig() as NamePlateDebuffsPluginConfig ?? new NamePlateDebuffsPluginConfig();
+            Config.Initialize(PluginInterface);
 
 
             Address = new PluginAddressResolver();

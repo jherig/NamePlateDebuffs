@@ -50,32 +50,32 @@ namespace NamePlateDebuffs.StatusNode
         {
             if (!Built()) return;
 
-            IconNode->AtkResNode.SetPositionShort((short)_plugin.Configuration.IconX, (short)_plugin.Configuration.IconY);
-            IconNode->AtkResNode.SetHeight((ushort)_plugin.Configuration.IconHeight);
-            IconNode->AtkResNode.SetWidth((ushort)_plugin.Configuration.IconWidth);
-            DurationNode->AtkResNode.SetPositionShort((short)_plugin.Configuration.DurationX, (short)_plugin.Configuration.DurationY);
-            DurationNode->FontSize = (byte) _plugin.Configuration.FontSize;
+            IconNode->AtkResNode.SetPositionShort((short)_plugin.Config.IconX, (short)_plugin.Config.IconY);
+            IconNode->AtkResNode.SetHeight((ushort)_plugin.Config.IconHeight);
+            IconNode->AtkResNode.SetWidth((ushort)_plugin.Config.IconWidth);
+            DurationNode->AtkResNode.SetPositionShort((short)_plugin.Config.DurationX, (short)_plugin.Config.DurationY);
+            DurationNode->FontSize = (byte) _plugin.Config.FontSize;
             ushort outWidth = 0;
             ushort outHeight = 0;
             DurationNode->GetTextDrawSize(&outWidth, &outHeight);
-            DurationNode->AtkResNode.SetWidth((ushort)(outWidth + 2 * _plugin.Configuration.DurationPadding));
-            DurationNode->AtkResNode.SetHeight((ushort)(outHeight + 2 * _plugin.Configuration.DurationPadding));
+            DurationNode->AtkResNode.SetWidth((ushort)(outWidth + 2 * _plugin.Config.DurationPadding));
+            DurationNode->AtkResNode.SetHeight((ushort)(outHeight + 2 * _plugin.Config.DurationPadding));
 
-            ushort iconHeight = (ushort)(_plugin.Configuration.IconY + _plugin.Configuration.IconHeight);
-            ushort durationHeight = (ushort)(_plugin.Configuration.DurationY + DurationNode->AtkResNode.Height);
+            ushort iconHeight = (ushort)(_plugin.Config.IconY + _plugin.Config.IconHeight);
+            ushort durationHeight = (ushort)(_plugin.Config.DurationY + DurationNode->AtkResNode.Height);
 
             RootNode->SetHeight(durationHeight > iconHeight ? durationHeight : iconHeight);
-            RootNode->SetWidth((ushort)(DurationNode->AtkResNode.Width > _plugin.Configuration.IconWidth ? DurationNode->AtkResNode.Width : _plugin.Configuration.IconWidth));
+            RootNode->SetWidth((ushort)(DurationNode->AtkResNode.Width > _plugin.Config.IconWidth ? DurationNode->AtkResNode.Width : _plugin.Config.IconWidth));
 
-            DurationNode->TextColor.R = (byte)(_plugin.Configuration.DurationTextColor.X * 255);
-            DurationNode->TextColor.G = (byte)(_plugin.Configuration.DurationTextColor.Y * 255);
-            DurationNode->TextColor.B = (byte)(_plugin.Configuration.DurationTextColor.Z * 255);
-            DurationNode->TextColor.A = (byte)(_plugin.Configuration.DurationTextColor.W * 255);
+            DurationNode->TextColor.R = (byte)(_plugin.Config.DurationTextColor.X * 255);
+            DurationNode->TextColor.G = (byte)(_plugin.Config.DurationTextColor.Y * 255);
+            DurationNode->TextColor.B = (byte)(_plugin.Config.DurationTextColor.Z * 255);
+            DurationNode->TextColor.A = (byte)(_plugin.Config.DurationTextColor.W * 255);
 
-            DurationNode->EdgeColor.R = (byte)(_plugin.Configuration.DurationEdgeColor.X * 255);
-            DurationNode->EdgeColor.G = (byte)(_plugin.Configuration.DurationEdgeColor.Y * 255);
-            DurationNode->EdgeColor.B = (byte)(_plugin.Configuration.DurationEdgeColor.Z * 255);
-            DurationNode->EdgeColor.A = (byte)(_plugin.Configuration.DurationEdgeColor.W * 255);
+            DurationNode->EdgeColor.R = (byte)(_plugin.Config.DurationEdgeColor.X * 255);
+            DurationNode->EdgeColor.G = (byte)(_plugin.Config.DurationEdgeColor.Y * 255);
+            DurationNode->EdgeColor.B = (byte)(_plugin.Config.DurationEdgeColor.Z * 255);
+            DurationNode->EdgeColor.A = (byte)(_plugin.Config.DurationEdgeColor.W * 255);
         }
 
         public bool Built() => RootNode != null && IconNode != null && DurationNode != null;

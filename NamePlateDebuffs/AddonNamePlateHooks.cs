@@ -49,7 +49,7 @@ namespace NamePlateDebuffs
 
         public void AddonNamePlateDrawDetour(AddonNamePlate* thisPtr)
         {
-            if (!_plugin.Configuration.Enabled || _plugin.InPvp)
+            if (!_plugin.Config.Enabled || _plugin.InPvp)
             {
                 if (_timer.IsRunning)
                 {
@@ -71,7 +71,7 @@ namespace NamePlateDebuffs
             _elapsed += _timer.ElapsedMilliseconds;
             _timer.Restart();
 
-            if (_elapsed >= _plugin.Configuration.UpdateInterval)
+            if (_elapsed >= _plugin.Config.UpdateInterval)
             {
                 if (!_plugin.StatusNodeManager.Built)
                 {

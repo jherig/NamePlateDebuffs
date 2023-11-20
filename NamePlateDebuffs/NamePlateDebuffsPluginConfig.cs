@@ -6,7 +6,7 @@ using System.Numerics;
 namespace NamePlateDebuffs
 {
     [Serializable]
-    public class Configuration : IPluginConfiguration
+    public class NamePlateDebuffsPluginConfig : IPluginConfiguration
     {
         public int Version { get; set; } = 1;
 
