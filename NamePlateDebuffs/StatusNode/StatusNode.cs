@@ -50,32 +50,32 @@ namespace NamePlateDebuffs.StatusNode
         {
             if (!Built()) return;
 
-            IconNode->AtkResNode.SetPositionShort((short)_plugin.Config.IconX, (short)_plugin.Config.IconY);
-            IconNode->AtkResNode.SetHeight((ushort)_plugin.Config.IconHeight);
-            IconNode->AtkResNode.SetWidth((ushort)_plugin.Config.IconWidth);
-            DurationNode->AtkResNode.SetPositionShort((short)_plugin.Config.DurationX, (short)_plugin.Config.DurationY);
-            DurationNode->FontSize = (byte) _plugin.Config.FontSize;
+            IconNode->AtkResNode.SetPositionShort((short)_plugin.Configuration.IconX, (short)_plugin.Configuration.IconY);
+            IconNode->AtkResNode.SetHeight((ushort)_plugin.Configuration.IconHeight);
+            IconNode->AtkResNode.SetWidth((ushort)_plugin.Configuration.IconWidth);
+            DurationNode->AtkResNode.SetPositionShort((short)_plugin.Configuration.DurationX, (short)_plugin.Configuration.DurationY);
+            DurationNode->FontSize = (byte) _plugin.Configuration.FontSize;
             ushort outWidth = 0;
             ushort outHeight = 0;
             DurationNode->GetTextDrawSize(&outWidth, &outHeight);
-            DurationNode->AtkResNode.SetWidth((ushort)(outWidth + 2 * _plugin.Config.DurationPadding));
-            DurationNode->AtkResNode.SetHeight((ushort)(outHeight + 2 * _plugin.Config.DurationPadding));
+            DurationNode->AtkResNode.SetWidth((ushort)(outWidth + 2 * _plugin.Configuration.DurationPadding));
+            DurationNode->AtkResNode.SetHeight((ushort)(outHeight + 2 * _plugin.Configuration.DurationPadding));
 
-            ushort iconHeight = (ushort)(_plugin.Config.IconY + _plugin.Config.IconHeight);
-            ushort durationHeight = (ushort)(_plugin.Config.DurationY + DurationNode->AtkResNode.Height);
+            ushort iconHeight = (ushort)(_plugin.Configuration.IconY + _plugin.Configuration.IconHeight);
+            ushort durationHeight = (ushort)(_plugin.Configuration.DurationY + DurationNode->AtkResNode.Height);
 
             RootNode->SetHeight(durationHeight > iconHeight ? durationHeight : iconHeight);
-            RootNode->SetWidth((ushort)(DurationNode->AtkResNode.Width > _plugin.Config.IconWidth ? DurationNode->AtkResNode.Width : _plugin.Config.IconWidth));
+            RootNode->SetWidth((ushort)(DurationNode->AtkResNode.Width > _plugin.Configuration.IconWidth ? DurationNode->AtkResNode.Width : _plugin.Configuration.IconWidth));
 
-            DurationNode->TextColor.R = (byte)(_plugin.Config.DurationTextColor.X * 255);
-            DurationNode->TextColor.G = (byte)(_plugin.Config.DurationTextColor.Y * 255);
-            DurationNode->TextColor.B = (byte)(_plugin.Config.DurationTextColor.Z * 255);
-            DurationNode->TextColor.A = (byte)(_plugin.Config.DurationTextColor.W * 255);
+            DurationNode->TextColor.R = (byte)(_plugin.Configuration.DurationTextColor.X * 255);
+            DurationNode->TextColor.G = (byte)(_plugin.Configuration.DurationTextColor.Y * 255);
+            DurationNode->TextColor.B = (byte)(_plugin.Configuration.DurationTextColor.Z * 255);
+            DurationNode->TextColor.A = (byte)(_plugin.Configuration.DurationTextColor.W * 255);
 
-            DurationNode->EdgeColor.R = (byte)(_plugin.Config.DurationEdgeColor.X * 255);
-            DurationNode->EdgeColor.G = (byte)(_plugin.Config.DurationEdgeColor.Y * 255);
-            DurationNode->EdgeColor.B = (byte)(_plugin.Config.DurationEdgeColor.Z * 255);
-            DurationNode->EdgeColor.A = (byte)(_plugin.Config.DurationEdgeColor.W * 255);
+            DurationNode->EdgeColor.R = (byte)(_plugin.Configuration.DurationEdgeColor.X * 255);
+            DurationNode->EdgeColor.G = (byte)(_plugin.Configuration.DurationEdgeColor.Y * 255);
+            DurationNode->EdgeColor.B = (byte)(_plugin.Configuration.DurationEdgeColor.Z * 255);
+            DurationNode->EdgeColor.A = (byte)(_plugin.Configuration.DurationEdgeColor.W * 255);
         }
 
         public bool Built() => RootNode != null && IconNode != null && DurationNode != null;
@@ -150,14 +150,14 @@ namespace NamePlateDebuffs.StatusNode
             var newResNode = (AtkResNode*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkResNode), 8);
             if (newResNode == null)
             {
-                PluginLog.Debug("Failed to allocate memory for res node");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for res node");
                 return null;
             }
             IMemorySpace.Memset(newResNode, 0, (ulong)sizeof(AtkResNode));
             newResNode->Ctor();
 
             newResNode->Type = NodeType.Res;
-            newResNode->Flags = (short)(NodeFlags.AnchorLeft | NodeFlags.AnchorTop);
+            newResNode->NodeFlags = (NodeFlags.AnchorLeft | NodeFlags.AnchorTop);
             newResNode->DrawFlags = 0;
 
             return newResNode;
@@ -168,14 +168,14 @@ namespace NamePlateDebuffs.StatusNode
             var newImageNode = (AtkImageNode*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkImageNode), 8);
             if (newImageNode == null)
             {
-                PluginLog.Debug("Failed to allocate memory for image node");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for image node");
                 return null;
             }
             IMemorySpace.Memset(newImageNode, 0, (ulong)sizeof(AtkImageNode));
             newImageNode->Ctor();
 
             newImageNode->AtkResNode.Type = NodeType.Image;
-            newImageNode->AtkResNode.Flags = (short)(NodeFlags.AnchorLeft | NodeFlags.AnchorTop | NodeFlags.UseDepthBasedPriority);
+            newImageNode->AtkResNode.NodeFlags = (NodeFlags.AnchorLeft | NodeFlags.AnchorTop | NodeFlags.UseDepthBasedPriority);
             newImageNode->AtkResNode.DrawFlags = 0;
 
             newImageNode->WrapMode = 1;
@@ -184,7 +184,7 @@ namespace NamePlateDebuffs.StatusNode
             var partsList = (AtkUldPartsList*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkUldPartsList), 8);
             if (partsList == null)
             {
-                PluginLog.Debug("Failed to allocate memory for parts list");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for parts list");
                 newImageNode->AtkResNode.Destroy(true);
                 return null;
             }
@@ -195,7 +195,7 @@ namespace NamePlateDebuffs.StatusNode
             var part = (AtkUldPart*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkUldPart), 8);
             if (part == null)
             {
-                PluginLog.Debug("Failed to allocate memory for part");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for part");
                 IMemorySpace.Free(partsList, (ulong)sizeof(AtkUldPartsList));
                 newImageNode->AtkResNode.Destroy(true);
             }
@@ -210,7 +210,7 @@ namespace NamePlateDebuffs.StatusNode
             var asset = (AtkUldAsset*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkUldAsset), 8);
             if (asset == null)
             {
-                PluginLog.Log("Failed to allocate memory for asset");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for asset");
                 IMemorySpace.Free(part, (ulong)sizeof(AtkUldPart));
                 IMemorySpace.Free(partsList, (ulong)sizeof(AtkUldPartsList));
                 newImageNode->AtkResNode.Destroy(true);
@@ -233,14 +233,14 @@ namespace NamePlateDebuffs.StatusNode
             var newTextNode = (AtkTextNode*)IMemorySpace.GetUISpace()->Malloc((ulong)sizeof(AtkTextNode), 8);
             if (newTextNode == null)
             {
-                PluginLog.Debug("Failed to allocate memory for text node");
+                NamePlateDebuffsPlugin.Log.Debug("Failed to allocate memory for text node");
                 return null;
             }
             IMemorySpace.Memset(newTextNode, 0, (ulong)sizeof(AtkTextNode));
             newTextNode->Ctor();
 
             newTextNode->AtkResNode.Type = NodeType.Text;
-            newTextNode->AtkResNode.Flags = (short)(NodeFlags.AnchorLeft | NodeFlags.AnchorTop | NodeFlags.UseDepthBasedPriority);
+            newTextNode->AtkResNode.NodeFlags = (NodeFlags.AnchorLeft | NodeFlags.AnchorTop | NodeFlags.UseDepthBasedPriority);
             newTextNode->AtkResNode.DrawFlags = 12;
             newTextNode->AtkResNode.SetWidth(24);
             newTextNode->AtkResNode.SetHeight(17);

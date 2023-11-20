@@ -1,16 +1,12 @@
 ﻿using Dalamud.Configuration;
 using Dalamud.Plugin;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NamePlateDebuffs
 {
     [Serializable]
-    public class NamePlateDebuffsPluginConfig : IPluginConfiguration
+    public class Configuration : IPluginConfiguration
     {
         public int Version { get; set; } = 1;
 
@@ -35,8 +31,8 @@ namespace NamePlateDebuffs
         public int DurationY = 23;
         public int FontSize = 14;
         public int DurationPadding = 2;
-        public Vector4 DurationTextColor = new Vector4(1, 1, 1, 1);
-        public Vector4 DurationEdgeColor = new Vector4(0, 0, 0, 1);
+        public Vector4 DurationTextColor = new(1, 1, 1, 1);
+        public Vector4 DurationEdgeColor = new(0, 0, 0, 1);
 
         public void SetDefaults()
         {
@@ -70,7 +66,8 @@ namespace NamePlateDebuffs
             DurationEdgeColor.W = 1;
         }
 
-        [NonSerialized] private DalamudPluginInterface _pluginInterface;
+        [NonSerialized] 
+        private DalamudPluginInterface? _pluginInterface;
 
         public void Initialize(DalamudPluginInterface pluginInterface)
         {
@@ -79,7 +76,7 @@ namespace NamePlateDebuffs
 
         public void Save()
         {
-            _pluginInterface.SavePluginConfig(this);
+            _pluginInterface!.SavePluginConfig(this);
         }
     }
 }

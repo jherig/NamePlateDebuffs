@@ -1,13 +1,10 @@
 ﻿using Dalamud.Game.Command;
-using Dalamud.Plugin;
-using Lumina.Excel.GeneratedSheets;
-using NamePlateDebuffs.StatusNode;
-using System.Collections.Generic;
-using Dalamud.Data;
-using Dalamud.Game;
-using Dalamud.Game.ClientState;
 using Dalamud.IoC;
-using Dalamud.Logging;
+using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
+using NamePlateDebuffs.StatusNode;
+using Dalamud.Game;
+
 
 namespace NamePlateDebuffs
 {
@@ -15,47 +12,34 @@ namespace NamePlateDebuffs
     {
         public string Name => "NamePlateDebuffs";
 
-        [PluginService]
-        [RequiredVersion("1.0")]
-        public DalamudPluginInterface Interface { get; private set; } = null!;
-
-        [PluginService]
-        [RequiredVersion("1.0")]
-        public ClientState ClientState { get; private set; } = null!;
-
-        [PluginService]
-        [RequiredVersion("1.0")]
-        public static CommandManager CommandManager { get; private set; } = null!;
-
-        public DataManager DataManager { get; private set; } = null!;
-        public Framework Framework { get; private set; } = null!;
+        [PluginService][RequiredVersion("1.0")] public DalamudPluginInterface PluginInterface { get; private set; } = null!;
+        [PluginService][RequiredVersion("1.0")] public IClientState ClientState { get; private set; } = null!;
+        [PluginService][RequiredVersion("1.0")] public static ICommandManager CommandManager { get; private set; } = null!;
+        [PluginService] public static IDataManager DataManager { get; private set; } = null!;
+        [PluginService] public static IFramework Framework { get; private set; } = null!;
+        [PluginService] public static IPluginLog Log { get; private set; } = null!;
+        [PluginService] public static ISigScanner SigScanner { get; private set; } = null!;
+        [PluginService] public static IGameInteropProvider Hook { get; private set; } = null!;
         public PluginAddressResolver Address { get; private set; } = null!;
         public StatusNodeManager StatusNodeManager { get; private set; } = null!;
         public static AddonNamePlateHooks Hooks { get; private set; } = null!;
         public NamePlateDebuffsPluginUI UI { get; private set; } = null!;
-        public NamePlateDebuffsPluginConfig Config { get; private set; } = null!;
+        public Configuration Configuration { get;}
 
         internal bool InPvp;
 
-        public NamePlateDebuffsPlugin(
-            ClientState clientState,
-            CommandManager commandManager, 
-            DalamudPluginInterface pluginInterface, 
-            DataManager dataManager,
-            Framework framework
-            )
+        public NamePlateDebuffsPlugin()
         {
-            ClientState = clientState;
-            CommandManager = commandManager;
-            DataManager = dataManager;
-            Interface = pluginInterface;
-            Framework = framework;
+            // load ECommons
+            //ECommonsMain.Init(PluginInterface, this, Module.DalamudReflector);
 
-            Config = pluginInterface.GetPluginConfig() as NamePlateDebuffsPluginConfig ?? new NamePlateDebuffsPluginConfig();
-            Config.Initialize(pluginInterface);
+            // load or create config
+            Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
+            Configuration.Initialize(PluginInterface);
+
 
             Address = new PluginAddressResolver();
-            Address.Setup();
+            Address.Setup(SigScanner);
 
             StatusNodeManager = new StatusNodeManager(this);
 
@@ -64,7 +48,7 @@ namespace NamePlateDebuffs
 
             UI = new NamePlateDebuffsPluginUI(this);
 
-            ClientState.TerritoryChanged += OnTerritoryChange;
+            //ClientState.TerritoryChanged += OnTerritoryChange;
 
             CommandManager.AddHandler("/npdebuffs", new CommandInfo(this.ToggleConfig)
             {
@@ -73,7 +57,7 @@ namespace NamePlateDebuffs
         }
         public void Dispose()
         {
-            ClientState.TerritoryChanged -= OnTerritoryChange;
+            //ClientState?.TerritoryChanged -= OnTerritoryChange;
             CommandManager.RemoveHandler("/npdebuffs");
 
             UI.Dispose();
@@ -81,18 +65,18 @@ namespace NamePlateDebuffs
             StatusNodeManager.Dispose();
         }
 
-        private void OnTerritoryChange(object sender, ushort e)
-        {
-            try
-            {
-                TerritoryType territory = DataManager.GetExcelSheet<TerritoryType>()?.GetRow(e);
-                if (territory != null) InPvp = territory.IsPvpZone;
-            }
-            catch (KeyNotFoundException)
-            {
-                PluginLog.Warning("Could not get territory for current zone");
-            }
-        }
+        //private void OnTerritoryChange(object sender, ushort e)
+        //{
+        //    try
+        //    {
+        //        TerritoryType? territory = DataManager.GetExcelSheet<TerritoryType>()?.GetRow(e);
+        //        if (territory != null) InPvp = territory.IsPvpZone;
+        //    }
+        //    catch (KeyNotFoundException)
+        //    {
+        //        Log.Warning("Could not get territory for current zone");
+        //    }
+        //}
 
         private void ToggleConfig(string command, string args)
         {

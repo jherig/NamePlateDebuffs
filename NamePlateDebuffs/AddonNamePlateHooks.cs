@@ -1,9 +1,9 @@
-﻿using Dalamud.Hooking;
+﻿using Dalamud.Game.ClientState.Keys;
+using Dalamud.Hooking;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using FFXIVClientStructs.FFXIV.Client.System.Framework;
 using FFXIVClientStructs.FFXIV.Client.UI;
-using FFXIVClientStructs.FFXIV.Component.GUI;
 using System;
 using System.Diagnostics;
 
@@ -34,8 +34,8 @@ namespace NamePlateDebuffs
 
         public void Initialize()
         {
-            _hookAddonNamePlateFinalize = new Hook<AddonNamePlateFinalizePrototype>(_plugin.Address.AddonNamePlateFinalizeAddress, AddonNamePlateFinalizeDetour);
-            _hookAddonNamePlateDraw = new Hook<AddonNamePlateDrawPrototype>(_plugin.Address.AddonNamePlateDrawAddress, AddonNamePlateDrawDetour);
+            _hookAddonNamePlateFinalize = NamePlateDebuffsPlugin.Hook.HookFromAddress<AddonNamePlateFinalizePrototype>(_plugin.Address.AddonNamePlateFinalizeAddress, AddonNamePlateFinalizeDetour);
+            _hookAddonNamePlateDraw = NamePlateDebuffsPlugin.Hook.HookFromAddress<AddonNamePlateDrawPrototype>(_plugin.Address.AddonNamePlateDrawAddress, AddonNamePlateDrawDetour);
 
             _hookAddonNamePlateFinalize.Enable();
             _hookAddonNamePlateDraw.Enable();
@@ -49,7 +49,7 @@ namespace NamePlateDebuffs
 
         public void AddonNamePlateDrawDetour(AddonNamePlate* thisPtr)
         {
-            if (!_plugin.Config.Enabled || _plugin.InPvp)
+            if (!_plugin.Configuration.Enabled || _plugin.InPvp)
             {
                 if (_timer.IsRunning)
                 {
@@ -71,7 +71,7 @@ namespace NamePlateDebuffs
             _elapsed += _timer.ElapsedMilliseconds;
             _timer.Restart();
 
-            if (_elapsed >= _plugin.Config.UpdateInterval)
+            if (_elapsed >= _plugin.Configuration.UpdateInterval)
             {
                 if (!_plugin.StatusNodeManager.Built)
                 {
@@ -80,7 +80,7 @@ namespace NamePlateDebuffs
                         return;
                 }
 
-                var framework = FFXIVClientStructs.FFXIV.Client.System.Framework.Framework.Instance();
+                var framework = Framework.Instance();
                 var ui3DModule = framework->GetUiModule()->GetUI3DModule();
 
                 for (int i = 0; i < ui3DModule->NamePlateObjectInfoCount; i++)
@@ -114,7 +114,7 @@ namespace NamePlateDebuffs
                             _plugin.StatusNodeManager.HideUnusedStatus(npIndex, 0);
                             continue;
                         }
-                        StatusManager targetStatus = ((BattleChara*)objectInfo->GameObject)->StatusManager;
+                        StatusManager targetStatus = ((BattleChara*)objectInfo->GameObject)->GetStatusManager[0];
 
                         var statusArray = (Status*)targetStatus.Status;
 

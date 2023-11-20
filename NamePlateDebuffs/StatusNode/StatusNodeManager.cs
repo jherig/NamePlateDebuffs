@@ -30,7 +30,7 @@ namespace NamePlateDebuffs.StatusNode
 
             NodeGroups = new StatusNodeGroup[NamePlateCount];
 
-            StatusSheet = _plugin.DataManager.GetExcelSheet<Status>();
+            StatusSheet = NamePlateDebuffsPlugin.DataManager.GetExcelSheet<Status>();
         }
 
         public void Dispose()
@@ -72,7 +72,7 @@ namespace NamePlateDebuffs.StatusNode
 
             StatusNodeGroup group = NodeGroups[groupIndex];
 
-            group?.SetStatus(statusIndex, row.Icon, timer);
+            group?.SetStatus(statusIndex, (int)row.Icon, timer);
         }
 
         public void HideUnusedStatus(int groupIndex, int statusCount)
@@ -113,7 +113,7 @@ namespace NamePlateDebuffs.StatusNode
  
             for(byte i = 0; i < NamePlateCount; i++)
             {
-                StatusNodeGroup nodeGroup = new StatusNodeGroup(_plugin);
+                StatusNodeGroup nodeGroup = new(_plugin);
                 var npObj = &namePlateAddon->NamePlateObjectArray[i];
                 if (!nodeGroup.BuildNodes(StartingNodeId))
                 {
