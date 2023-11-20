@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NamePlateDebuffs", "NamePlateDebuffs\NamePlateDebuffs.csproj", "{782BF1DA-8527-49FC-8E37-82B7D7921354}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommons", "ECommons\ECommons\ECommons.csproj", "{397D800B-353D-4B78-9FAA-95F463543FAD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,14 +21,6 @@ Global
 		{782BF1DA-8527-49FC-8E37-82B7D7921354}.Release|Any CPU.Build.0 = Release|Any CPU
 		{782BF1DA-8527-49FC-8E37-82B7D7921354}.Release|x64.ActiveCfg = Release|x64
 		{782BF1DA-8527-49FC-8E37-82B7D7921354}.Release|x64.Build.0 = Release|x64
-		{397D800B-353D-4B78-9FAA-95F463543FAD}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{397D800B-353D-4B78-9FAA-95F463543FAD}.Debug|Any CPU.Build.0 = Debug|x64
-		{397D800B-353D-4B78-9FAA-95F463543FAD}.Debug|x64.ActiveCfg = Debug|x64
-		{397D800B-353D-4B78-9FAA-95F463543FAD}.Debug|x64.Build.0 = Debug|x64
-		{397D800B-353D-4B78-9FAA-95F463543FAD}.Release|Any CPU.ActiveCfg = Release|x64
-		{397D800B-353D-4B78-9FAA-95F463543FAD}.Release|Any CPU.Build.0 = Release|x64
-		{397D800B-353D-4B78-9FAA-95F463543FAD}.Release|x64.ActiveCfg = Release|x64
-		{397D800B-353D-4B78-9FAA-95F463543FAD}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
